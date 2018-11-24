@@ -1,3 +1,3 @@
 # nexo-rest
 
-Flask application to publish endpoints
+Simple project to expose endpoints
