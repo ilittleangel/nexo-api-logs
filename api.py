@@ -42,8 +42,15 @@ def _gen_response(level):
     if 'file' in request.args:
         app.logger.debug(f"{request.args}")
         filename = request.args['file']
-        n_lines = request.args.get('nlines', default=2, type=int)
-        lines = [line for line in read_file(filename).splitlines() if level in line.lower()][:n_lines]
+        n_lines = request.args.get('nlines', type=int)
+
+        # full content
+        lines = [line for line in read_file(filename).splitlines() if f'[{level.upper()}]' in line]
+        if n_lines:
+            # only n last lines
+            length = len(lines)
+            lines = lines[length-n_lines:length]
+
         if level == 'info':
             body = gen_file_body(filename, content=lines)
         elif level == 'error':
