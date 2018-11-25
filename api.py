@@ -1,7 +1,7 @@
 from flask import Flask, request, Response, jsonify
 import json
 
-from utils.helpers import _read_dir, _read_file, _gen_file_body, _gen_error_body, _gen_warn_body, _gen_dir_body
+from utils.helpers import read_dir, read_file, gen_file_body, gen_error_body, gen_warn_body, gen_dir_body
 
 app = Flask(__name__)
 
@@ -21,10 +21,10 @@ def error404(msg):
 @app.route('/api/logs', methods=['GET'])
 def logs():
     if 'file' in request.args:
-        body = _gen_file_body(request.args['file'], _read_file(request.args['file']))
+        body = gen_file_body(request.args['file'], read_file(request.args['file']))
         status = 200
     elif 'dir' in request.args:
-        body = _gen_dir_body(request.args['dir'], _read_dir(request.args['dir']))
+        body = gen_dir_body(request.args['dir'], read_dir(request.args['dir']))
         status = 200
     else:
         return error404(f'Not Found: resource does not exits: {request.url}')
@@ -36,14 +36,14 @@ def logs():
 def _gen_response(level):
     if 'file' in request.args:
         filename = request.args['file']
-        n_lines = request.args.get('nlines', default=2)
-        lines = [line for line in _read_file(filename).splitlines() if level in line.lower()][:n_lines]
+        n_lines = request.args.get('nlines', default=2, type = int)
+        lines = [line for line in read_file(filename).splitlines() if level in line.lower()][:n_lines]
         if level == 'info':
-            body = _gen_file_body(filename, content=lines)
+            body = gen_file_body(filename, content=lines)
         elif level == 'error':
-            body = _gen_error_body(filename, errors=lines)
+            body = gen_error_body(filename, errors=lines)
         elif level == 'warning':
-            body = _gen_warn_body(filename, warnings=lines)
+            body = gen_warn_body(filename, warnings=lines)
         else:
             return error404(f'Not Found: resource does not exits: {request.url}')
     else:

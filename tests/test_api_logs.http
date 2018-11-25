@@ -14,11 +14,15 @@ GET http://localhost:5000/api/logs/info?file=tests/resources/file.log
 Accept: application/json
 
 ###
+GET http://localhost:5000/api/logs/warning?file=tests/resources/file.log
+Accept: application/json
+
+###
 GET http://localhost:5000/api/logs/error?file=tests/resources/file.log
 Accept: application/json
 
 ###
-GET http://localhost:5000/api/logs/warning?file=tests/resources/file.log
+GET http://localhost:5000/api/logs/error?file=tests/resources/file.log&nlines=4
 Accept: application/json
 
 ###
