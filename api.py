@@ -1,9 +1,13 @@
 from flask import Flask, request, Response, jsonify
 import json
 
+from settings import ROOT_DIR
 from utils.helpers import read_dir, read_file, gen_file_body, gen_error_body, gen_warn_body, gen_dir_body
+from utils.logging import init_logging
+
 
 app = Flask(__name__)
+init_logging(app, f'{ROOT_DIR}/logs/api.log')
 
 
 @app.errorhandler(404)
@@ -20,6 +24,7 @@ def error404(msg):
 
 @app.route('/api/logs', methods=['GET'])
 def logs():
+    app.logger.debug(f"{request.args}")
     if 'file' in request.args:
         body = gen_file_body(request.args['file'], read_file(request.args['file']))
         status = 200
@@ -35,8 +40,9 @@ def logs():
 
 def _gen_response(level):
     if 'file' in request.args:
+        app.logger.debug(f"{request.args}")
         filename = request.args['file']
-        n_lines = request.args.get('nlines', default=2, type = int)
+        n_lines = request.args.get('nlines', default=2, type=int)
         lines = [line for line in read_file(filename).splitlines() if level in line.lower()][:n_lines]
         if level == 'info':
             body = gen_file_body(filename, content=lines)
