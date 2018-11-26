@@ -6,11 +6,11 @@ from utils.helpers import read_dir, read_file, gen_file_body, gen_error_body, ge
 from utils.logging import init_logging
 
 
-app = Flask(__name__)
-init_logging(app, f'{ROOT_DIR}/logs/api.log')
+application = Flask(__name__)
+init_logging(application, f'{ROOT_DIR}/logs/api.log')
 
 
-@app.errorhandler(404)
+@application.errorhandler(404)
 def error404(msg):
     message = {
         'code': 404,
@@ -22,9 +22,9 @@ def error404(msg):
     return response
 
 
-@app.route('/api/logs', methods=['GET'])
+@application.route('/api/logs', methods=['GET'])
 def logs():
-    app.logger.debug(f"{request.args}")
+    application.logger.debug(f"{request.args}")
     if 'file' in request.args:
         body = gen_file_body(request.args['file'], read_file(request.args['file']))
         status = 200
@@ -40,7 +40,7 @@ def logs():
 
 def _gen_response(level):
     if 'file' in request.args:
-        app.logger.debug(f"{request.args}")
+        application.logger.debug(f"{request.args}")
         filename = request.args['file']
         n_lines = request.args.get('nlines', type=int)
 
@@ -66,20 +66,16 @@ def _gen_response(level):
     return res
 
 
-@app.route('/api/logs/info', methods=['GET'])
+@application.route('/api/logs/info', methods=['GET'])
 def logs_info():
     return _gen_response('info')
 
 
-@app.route('/api/logs/error', methods=['GET'])
+@application.route('/api/logs/error', methods=['GET'])
 def logs_error():
     return _gen_response('error')
 
 
-@app.route('/api/logs/warning', methods=['GET'])
+@application.route('/api/logs/warning', methods=['GET'])
 def logs_warning():
     return _gen_response('warning')
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
