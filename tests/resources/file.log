@@ -1,0 +1,17 @@
+[2018-11-23 03:13:41,845][pipeline][ERROR]: 1 - Health failure on ['https://asdfo3458dwng08q43yut0.eu-central-1.aws.cloud.es.io:9243']: http_status=502: 502 Server Error: Bad Gateway for url: https://asdfo3458dwng08q43yut0.eu-central-1.aws.cloud.es.io:9243/_cluster/health
+[2018-11-23 03:13:44,453][pipeline][INFO]: Status Health of [http://elasticsearch:9200]: yellow
+[2018-11-23 03:13:44,698][pipeline][ERROR]: 2 - Health failure on ['https://asdfo3458dwng08q43yut0.eu-central-1.aws.cloud.es.io:9243']: http_status=502: 502 Server Error: Bad Gateway for url: https://asdfo3458dwng08q43yut0.eu-central-1.aws.cloud.es.io:9243/_cluster/health
+[2018-11-23 03:13:46,709][pipeline][INFO]: Requesting for Tags ...
+[2018-11-23 03:13:47,159][pipeline][INFO]: Status Health of [http://elasticsearch:9200]: yellow
+[2018-11-23 03:13:47,331][pipeline][ERROR]: 3 - Health failure on ['https://asdfo3458dwng08q43yut0.eu-central-1.aws.cloud.es.io:9243']: http_status=502: 502 Server Error: Bad Gateway for url: https://asdfo3458dwng08q43yut0.eu-central-1.aws.cloud.es.io:9243/_cluster/health
+[2018-11-23 03:13:47,332][pipeline][INFO]: Indexing on ['https://asdfo3458dwng08q43yut0.eu-central-1.aws.cloud.es.io:9243']: False
+[2018-11-23 03:14:09,542][pipeline][WARNING]: Something wrong with `gettags()`: <Response [502]>
+[2018-11-23 03:14:09,542][pipeline][INFO]: sleeping 10 seconds
+[2018-11-23 03:14:31,884][pipeline][WARNING]: Something wrong with `gettags()`: <Response [502]>
+[2018-11-23 03:14:31,884][pipeline][INFO]: sleeping 10 seconds
+[2018-11-23 03:14:44,470][pipeline][WARNING]: Something wrong with `gettags()`: <Response [502]>
+[2018-11-23 03:14:44,471][pipeline][INFO]: sleeping 20 seconds
+[2018-11-23 03:15:06,774][pipeline][WARNING]: Something wrong with `gettags()`: <Response [502]>
+[2018-11-23 03:15:06,774][pipeline][INFO]: sleeping 20 seconds
+[2018-11-23 03:15:30,117][pipeline][ERROR]: 4 - Tags ingestion FAILED because too many failures: failures=`5`
+[2018-11-23 03:15:30,118][pipeline][INFO]: CALLING PROCESS EXIT
