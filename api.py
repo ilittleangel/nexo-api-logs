@@ -10,13 +10,13 @@ from settings import ROOT_DIR
 application = Flask(__name__)
 init_logging(application, f'{ROOT_DIR}/logs/api.log')
 
+
 not_found_msg = 'Not found the `file=` pathParam inside the queryString'
 not_such_file = 'No such file or directory'
 
 
 @application.route('/api/logs', methods=['GET'])
 def logs():
-    application.logger.debug(f"{request.args}")
     if 'file' not in request.args:
         return not_found(not_found_msg)
 
@@ -25,12 +25,12 @@ def logs():
         return not_found(not_such_file)
     body = gen_file_body(filename, list(read_file(filename).splitlines()))
 
-    res = Response(json.dumps(body, indent=4), status=200, mimetype='application/json')
-    return res
+    response = Response(json.dumps(body, indent=4), status=200, mimetype='application/json')
+    application.logger.info(f"{response.status}")
+    return response
 
 
 def _gen_response(level):
-    application.logger.debug(f"{request.args}")
     if 'file' not in request.args:
         return not_found(not_found_msg)
 
@@ -55,8 +55,10 @@ def _gen_response(level):
     else:
         return not_found(f'Not Found: resource does not exits: {request.url}')
 
-    res = Response(json.dumps(body, indent=4), status=200, mimetype='application/json')
-    return res
+    response = Response(json.dumps(body, indent=4), status=200, mimetype='application/json')
+    application.logger.info(f"{response.status}")
+
+    return response
 
 
 @application.route('/api/logs/info', methods=['GET'])
@@ -83,4 +85,5 @@ def not_found(msg):
     }
     response = jsonify(message)
     response.status_code = 404
+    application.logger.error(f"{response.status}")
     return response
