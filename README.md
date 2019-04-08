@@ -1,4 +1,4 @@
-# nexo-rest
+# nexo-api-logs
 
 1. [What's the point?](#whats-the-point)
 2. [Logs resource](#logs-resource)
@@ -124,6 +124,5 @@ kill $(cat api.pid)
 
 - [ ] Authorization
 - [ ] Unit testing of each endpoint
-- [ ] Create the `swagger.yaml` configuration file
-- [ ] Use `flask-restful` framework
-- [ ] Create a DockerFile
+- [ ] Create the `swagger.yaml`
+- [ ] DockerFile
